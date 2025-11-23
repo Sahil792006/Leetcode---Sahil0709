@@ -1,0 +1,35 @@
+class Solution {
+    public int maxSumDivThree(int[] nums) {
+        int sum = 0;
+
+        List<Integer> mod1 = new ArrayList<>();
+        List<Integer> mod2 = new ArrayList<>();
+        for(int i : nums){
+            sum += i;
+            if(i % 3 == 1){
+                mod1.add(i);
+            }else if(i % 3 == 2){
+                mod2.add(i);
+            }
+        }
+
+        if(sum % 3 == 0) return sum;
+
+        Collections.sort(mod1);
+        Collections.sort(mod2);
+
+        int remainder = sum % 3;
+        int op1 = Integer.MAX_VALUE;
+        int op2 = Integer.MAX_VALUE;
+
+        if(remainder == 1){
+            if(!mod1.isEmpty()) op1 = mod1.get(0);
+            if(mod2.size() >= 2) op2 = mod2.get(1) + mod2.get(0); 
+        }else{
+            if(!mod2.isEmpty()) op2 = mod2.get(0);
+            if(mod1.size() >=2) op1 = mod1.get(1) + mod1.get(0);
+        }
+
+        return sum - Math.min(op1, op2);
+    }
+}
