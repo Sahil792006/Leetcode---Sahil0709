@@ -1,0 +1,36 @@
+WITH STACK 101MS 
+class Solution {
+    public int minimumDeletions(String s) {
+        Stack<Character> stack = new Stack<>();
+        int count = 0;
+        for(char c : s.toCharArray()){
+            if(c == 'a'){
+                if(!stack.isEmpty() && stack.peek() == 'b'){
+                    stack.pop();
+                    count++;
+                }else{
+                    stack.push(c);
+                }
+            }else{
+                stack.push(c);
+            }
+        }
+        return count;
+    }
+}
+
+OPTIMIZED SOLN DP
+class Solution {
+    public int minimumDeletions(String s) {
+        int dp = 0;
+        int countB = 0;
+        for(char c : s.toCharArray()){
+            if(c == 'a'){
+                dp = Math.min(dp+1, countB);
+            }else{
+                countB++;
+            }
+        }
+        return dp;
+    }
+}
